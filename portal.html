@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal</title>
+    <link rel="stylesheet" href="portal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage">
+        <div class="login-box">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <h1>Student Assignment Portal</h1>
+                <!-- <p>Student Assignment System</p> -->
+            </div>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Student ID" id="studentId" required>
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Password" id="password" required>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+            
+            <div class="demo">
+                <p><i class="fas fa-info-circle"></i> Demo: s1001 / pass123</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Portal -->
+    <div id="mainPortal" class="hidden">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <span>Student Assignment Portal</span>
+            </div>
+            
+            <div class="user-area">
+                <div class="user">
+                    <i class="fas fa-user-circle"></i>
+                    <div>
+                        <h3 id="studentName">John Doe</h3>
+                        <p>CS Student</p>
+                    </div>
+                </div>
+                <button onclick="logout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Sidebar -->
+            <nav class="sidebar">
+                <a href="#dashboard" class="nav-item active" onclick="showSection('dashboard')">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="#submit" class="nav-item" onclick="showSection('submit')">
+                    <i class="fas fa-upload"></i> Submit
+                </a>
+                <a href="#assignments" class="nav-item" onclick="showSection('assignments')">
+                    <i class="fas fa-tasks"></i> Assignments
+                </a>
+                <a href="#grades" class="nav-item" onclick="showSection('grades')">
+                    <i class="fas fa-star"></i> Grades
+                </a>
+            </nav>
+
+            <!-- Content Area -->
+            <div class="content">
+                <!-- Dashboard -->
+                <section id="dashboard" class="section active">
+                    <div class="welcome-card">
+                        <h1>Welcome back, <span id="welcomeName">Student</span>! 👋</h1>
+                        <p>Track your academic progress and submit assignments easily.</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card blue">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h3>Pending</h3>
+                                <p id="pendingStat">2</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card green">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h3>Submitted</h3>
+                                <p id="submittedStat">5</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card purple">
+                            <i class="fas fa-chart-line"></i>
+                            <div>
+                                <h3>Average</h3>
+                                <p id="averageStat">85%</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+                        <div class="actions">
+                            <button onclick="showSection('submit')" class="action-btn">
+                                <i class="fas fa-plus-circle"></i> New Submission
+                            </button>
+                            <button onclick="showSection('grades')" class="action-btn">
+                                <i class="fas fa-chart-bar"></i> View Grades
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="deadlines">
+                        <h2><i class="fas fa-calendar-alt"></i> Upcoming Deadlines</h2>
+                        <div class="deadline-list">
+                            <div class="deadline-item urgent">
+                                <span>Math Assignment</span>
+                                <span>Tomorrow</span>
+                            </div>
+                            <div class="deadline-item">
+                                <span>Physics Lab</span>
+                                <span>3 days</span>
+                            </div>
+                            <div class="deadline-item">
+                                <span>C++ Project</span>
+                                <span>1 week</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Submit -->
+                <section id="submit" class="section">
+                    <h1><i class="fas fa-upload"></i> Submit Assignment</h1>
+                    
+                    <div class="form-card">
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <select id="subject">
+                                <option value="">Select Subject</option>
+                                <option value="math">Mathematics</option>
+                                <option value="physics">Physics</option>
+                                <option value="cs">Computer Science</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Assignment Title</label>
+                            <input type="text" id="title" placeholder="Enter title">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>File Upload</label>
+                            <div class="upload-zone" onclick="document.getElementById('file').click()">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click or drag file here</p>
+                                <small>Max 10MB</small>
+                                <input type="file" id="file" hidden>
+                            </div>
+                            <p id="fileName">No file selected</p>
+                        </div>
+                        
+                        <button onclick="submitAssignment()" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Submit Now
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Assignments -->
+                <section id="assignments" class="section">
+                    <h1><i class="fas fa-tasks"></i> My Assignments</h1>
+                    
+                    <div class="filters">
+                        <button class="filter active">All</button>
+                        <button class="filter">Submitted</button>
+                        <button class="filter">Graded</button>
+                    </div>
+                    
+                    <div id="assignmentList" class="assignment-list">
+                        <!-- Assignments will load here -->
+                    </div>
+                </section>
+
+                <!-- Grades -->
+                <section id="grades" class="section">
+                    <h1><i class="fas fa-star"></i> My Grades</h1>
+                    
+                    <div class="grade-card">
+                        <div class="grade-circle">
+                            <h3>Overall</h3>
+                            <div class="grade">85%</div>
+                        </div>
+                        
+                        <div class="grade-details">
+                            <table>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Grade</th>
+                                    <th>Status</th>
+                                </tr>
+                                <tr>
+                                    <td>Mathematics</td>
+                                    <td>92%</td>
+                                    <td><span class="status completed">Completed</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Physics</td>
+                                    <td>88%</td>
+                                    <td><span class="status completed">Completed</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Programming</td>
+                                    <td>95%</td>
+                                    <td><span class="status completed">Completed</span></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast"></div>
+
+    <script src="portal.js"></script>
+</body>
+</html>
